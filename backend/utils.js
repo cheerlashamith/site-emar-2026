@@ -16,7 +16,7 @@ const ADMIN_EMAIL = 'convener.siteemar2026@sasi.ac.in'; // Updated admin email
 // 0.1 EMAILJS CONFIGURATION
 // =============================================
 // TODO: User must replace these with their actual EmailJS credentials
-const EMAILJS_SERVICE_ID = 'service_rmksvdn'; // Corrected from likely copy-paste error
+const EMAILJS_SERVICE_ID = 'service_4cc8h4p'; // Corrected service ID
 const EMAILJS_TEMPLATE_ID = 'template_lfsiltc';
 const EMAILJS_PUBLIC_KEY = 'mDhKwcR0qubVGhPLZ';
 
@@ -481,9 +481,9 @@ async function sendUserNotification(email, options) {
         try {
             console.log(`✉️ Sending email via EmailJS to: ${email}`);
             const emailData = {
-                service_id: 'service_4cc8h4p',
-                template_id: 'template_c79p4rm', // Added template_ prefix
-                user_id: 'mDhKwcR0qubVGhPLZ', // Public Key
+                service_id: EMAILJS_SERVICE_ID,
+                template_id: EMAILJS_TEMPLATE_ID,
+                user_id: EMAILJS_PUBLIC_KEY,
                 template_params: {
                     to_email: email,
                     subject: options.subject,
@@ -509,6 +509,7 @@ async function sendUserNotification(email, options) {
                     .eq('recipient_email', email)
                     .eq('subject', options.subject);
                     
+                showSuccess(`Automated email sent successfully to ${email}`);
                 return true;
             } else {
                 const errorText = await response.text();

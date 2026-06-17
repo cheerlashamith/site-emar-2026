@@ -193,7 +193,7 @@ Paper Details:
 Your paper is now under review. You will be notified once the review process is complete.
 
 You can track the status of your submission by logging into your account at:
-${window.location.origin}/papersubmission.html
+https://site-emar-2026.netlify.app/papersubmission.html
 
 For any queries, please contact us at: ${window.utils.ADMIN_EMAIL}
 
@@ -237,7 +237,7 @@ Abstract:
 ${paperData.abstract}
 
 Please review this submission in the admin dashboard:
-${window.location.origin}/admin.html
+https://site-emar-2026.netlify.app/admin.html
 
 ---
 This is an automated notification from SITE-EMAR 2026 Conference Management System.`;

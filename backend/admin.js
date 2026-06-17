@@ -369,7 +369,7 @@ Paper Details:
 ${paperData.review_comments ? `\nReviewer Comments:\n${paperData.review_comments}\n` : ''}
 
 You can view your submission details by logging into your account at:
-${window.location.origin}/papersubmission.html
+https://site-emar-2026.netlify.app/papersubmission.html
 
 For any queries, please contact us at: ${ADMIN_EMAIL}
 
