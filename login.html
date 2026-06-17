@@ -241,59 +241,6 @@
             border: 1px solid #C8E6C9;
         }
 
-        /* Remembered Account Card */
-        .remembered-card {
-            display: none;
-            align-items: center;
-            background: var(--off-white);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid var(--medium-gray);
-            cursor: pointer;
-            transition: var(--trans-fast);
-        }
-
-        .remembered-card:hover {
-            border-color: var(--primary-red);
-            background: #fff;
-        }
-
-        .remembered-avatar {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-red);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-right: 15px;
-        }
-
-        .remembered-info {
-            flex: 1;
-        }
-
-        .remembered-name {
-            font-weight: 700;
-            color: var(--text-dark);
-            font-size: 0.95rem;
-            margin-bottom: 2px;
-        }
-
-        .remembered-email {
-            color: var(--text-gray);
-            font-size: 0.85rem;
-        }
-
-        .remembered-switch {
-            font-size: 0.8rem;
-            color: var(--primary-red);
-            font-weight: 600;
-        }
     </style>
 </head>
 
@@ -307,15 +254,6 @@
         <div class="login-body">
             <div class="alert error" id="errorAlert"></div>
             <div class="alert success" id="successAlert"></div>
-
-            <div id="rememberedCard" class="remembered-card" onclick="useRememberedAccount()">
-                <div class="remembered-avatar" id="remAvatar">A</div>
-                <div class="remembered-info">
-                    <div class="remembered-name" id="remName">User Name</div>
-                    <div class="remembered-email" id="remEmail">user@example.com</div>
-                </div>
-                <div class="remembered-switch">Switch <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 21l6-6M9 8l-6 6M4 14v5h5M14 4l-6 6"/></svg></div>
-            </div>
 
             <form id="loginForm">
                 <div class="form-group">
@@ -381,37 +319,8 @@
             successAlert.style.display = 'none';
         }
 
-        // Switch back to normal email input
-        function useRememberedAccount() {
-            document.getElementById('rememberedCard').style.display = 'none';
-            const emailInput = document.getElementById('email');
-            emailInput.parentElement.style.display = 'block';
-            emailInput.focus();
-            emailInput.select();
-        }
-
         // Initialize page
         window.addEventListener('load', async function () {
-            // Check for remembered user
-            const savedEmail = localStorage.getItem('last_user_email');
-            const savedName = localStorage.getItem('last_user_name');
-            
-            if (savedEmail) {
-                const emailInput = document.getElementById('email');
-                emailInput.value = savedEmail;
-                
-                if (savedName) {
-                    document.getElementById('rememberedCard').style.display = 'flex';
-                    document.getElementById('remName').textContent = savedName;
-                    document.getElementById('remEmail').textContent = savedEmail;
-                    document.getElementById('remAvatar').textContent = savedName.charAt(0).toUpperCase();
-                    // Hide email input, only show password
-                    emailInput.parentElement.style.display = 'none';
-                    
-                    // Focus password field
-                    setTimeout(() => document.getElementById('password').focus(), 100);
-                }
-            }
 
             try {
                 // Initialize Auth module form handling

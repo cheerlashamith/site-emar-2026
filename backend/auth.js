@@ -86,16 +86,10 @@ async function login(email, password) {
  */
 async function logout() {
     try {
-        // Save user info before logging out for "Remember Me" feature
-        const userRecord = await getCurrentUserRecord();
-        if (userRecord && userRecord.email) {
-            localStorage.setItem('last_user_email', userRecord.email);
-            if (userRecord.title && userRecord.fullname) {
-                localStorage.setItem('last_user_name', `${userRecord.title} ${userRecord.fullname}`);
-            } else if (userRecord.fullname) {
-                localStorage.setItem('last_user_name', userRecord.fullname);
-            }
-        }
+        // Clear local storage completely
+        localStorage.removeItem('last_user_email');
+        localStorage.removeItem('last_user_name');
+        utils.removeFromStorage('current_user');
 
         const { error } = await supabaseClient.auth.signOut();
 
