@@ -355,10 +355,6 @@
                     setTimeout(() => {
                         if (result.isAdmin) {
                             window.location.href = 'admin.html';
-                        } else if (category && (category.startsWith('listener') || category === 'listener')) {
-                            // Listeners stay on home/index with a message
-                            showAlert('Welcome! As a listener, you can browse the conference details.', 'success');
-                            setTimeout(() => { window.location.href = 'index.html'; }, 2000);
                         } else {
                             window.location.href = 'papersubmission.html';
                         }
@@ -392,11 +388,7 @@
                         const category = userRecord?.category || '';
                         console.log('👤 User session detected, category:', category);
 
-                        if (category && (category.startsWith('listener') || category === 'listener')) {
-                            window.location.href = 'index.html';
-                        } else {
-                            window.location.href = 'papersubmission.html';
-                        }
+                        window.location.href = 'papersubmission.html';
                     }
                 }
             } catch (error) {
