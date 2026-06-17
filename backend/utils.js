@@ -482,7 +482,7 @@ async function sendUserNotification(email, options) {
             console.log(`✉️ Sending email via EmailJS to: ${email}`);
             const emailData = {
                 service_id: 'service_4cc8h4p',
-                template_id: 'c79p4rm', // Try raw ID first
+                template_id: 'template_c79p4rm', // Added template_ prefix
                 user_id: 'mDhKwcR0qubVGhPLZ', // Public Key
                 template_params: {
                     to_email: email,
@@ -516,14 +516,8 @@ async function sendUserNotification(email, options) {
                 throw new Error(errorText);
             }
         } catch (emailError) {
-            console.error('EmailJS Error, falling back to mailto:', emailError);
-            
-            // Fallback: Open User's Email Client
-            const subject = encodeURIComponent(options.subject);
-            const body = encodeURIComponent(options.body);
-            const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
-            window.open(mailtoLink, '_blank');
-            
+            console.error('EmailJS Error:', emailError);
+            alert('Failed to send automated email. Error: ' + emailError.message);
             return false;
         }
     } catch (error) {
