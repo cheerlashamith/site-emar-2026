@@ -792,7 +792,7 @@
     </header>
 
     <!-- Main Container -->
-    <div class="container">
+    <div class="container" id="mainContainer" style="display: none;">
         <h2 class="page-title">Paper Submission Portal</h2>
 
         <!-- Welcome Card -->
@@ -1360,6 +1360,10 @@
                     document.getElementById('accessModal').classList.add('active');
                     return;
                 }
+                
+                // Reveal the main dashboard now that we know they are authorized
+                document.getElementById('mainContainer').style.display = 'block';
+
                 document.getElementById('welcomeName').textContent = user.full_name;
                 document.getElementById('userName').textContent = user.full_name;
                 document.getElementById('userAvatar').textContent = user.full_name.charAt(0);
