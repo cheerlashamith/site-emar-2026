@@ -1555,6 +1555,15 @@
                         <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
                 </a>
+                <a href="login.html" id="heroLoginBtn" class="btn btn-outline" style="background: var(--white); color: var(--primary-red); border-color: var(--white);">
+                    Login
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                        <polyline points="10 17 15 12 10 7"></polyline>
+                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                    </svg>
+                </a>
                 <a href="#scope" class="btn btn-outline">
                     View Topics
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -2156,6 +2165,42 @@
                 });
             });
 
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="backend/supabaseClient.js"></script>
+    <script src="backend/utils.js"></script>
+    <script src="backend/auth.js"></script>
+
+    <script>
+        // Dynamic Hero Login Button Logic
+        window.addEventListener('load', async function () {
+            try {
+                const session = await window.auth.getCurrentSession();
+                const heroBtn = document.getElementById('heroLoginBtn');
+                const navBtn = document.querySelector('.btn-login-nav');
+                
+                if (session && heroBtn) {
+                    const adminRecord = await window.auth.isAdmin();
+                    if (adminRecord) {
+                        heroBtn.innerHTML = 'Go to Admin Panel <i class="fas fa-arrow-right"></i>';
+                        heroBtn.href = 'admin.html';
+                        if (navBtn) {
+                            navBtn.textContent = 'Admin Panel';
+                            navBtn.href = 'admin.html';
+                        }
+                    } else {
+                        heroBtn.innerHTML = 'Go to Dashboard <i class="fas fa-arrow-right"></i>';
+                        heroBtn.href = 'papersubmission.html';
+                        if (navBtn) {
+                            navBtn.textContent = 'Dashboard';
+                            navBtn.href = 'papersubmission.html';
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking session for dynamic buttons:', error);
+            }
         });
     </script>
 </body>
