@@ -477,15 +477,55 @@ async function sendUserNotification(email, options) {
                 sent_at: new Date().toISOString()
             }]);
 
-        // 2. Open User's Email Client
-        const subject = encodeURIComponent(options.subject);
-        const body = encodeURIComponent(options.body);
-        const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+        // 2. Send Email via EmailJS REST API
+        try {
+            console.log(`✉️ Sending email via EmailJS to: ${email}`);
+            const emailData = {
+                service_id: 'service_4cc8h4p',
+                template_id: 'c79p4rm', // Try raw ID first
+                user_id: 'mDhKwcR0qubVGhPLZ', // Public Key
+                template_params: {
+                    to_email: email,
+                    subject: options.subject,
+                    message: options.body
+                }
+            };
 
-        // Open in new tab to avoid disrupting current page
-        window.open(mailtoLink, '_blank');
+            const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(emailData)
+            });
 
-        return true;
+            if (response.ok) {
+                console.log('✅ EmailJS sent successfully to:', email);
+                
+                // Update database status
+                await window.supabaseClient
+                    .from('email_notifications')
+                    .update({ status: 'sent' })
+                    .eq('recipient_email', email)
+                    .eq('subject', options.subject);
+                    
+                return true;
+            } else {
+                const errorText = await response.text();
+                console.error('❌ EmailJS failed:', errorText);
+                throw new Error(errorText);
+            }
+        } catch (emailError) {
+            console.error('EmailJS Error, falling back to mailto:', emailError);
+            
+            // Fallback: Open User's Email Client
+            const subject = encodeURIComponent(options.subject);
+            const body = encodeURIComponent(options.body);
+            const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+            window.open(mailtoLink, '_blank');
+            
+            return false;
+        }
     } catch (error) {
         console.error('Error in sendUserNotification:', error);
         return false;
